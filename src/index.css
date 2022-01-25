@@ -3,7 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body{
     font-family: 'Roboto', sans-serif;
 }
@@ -12,16 +11,93 @@ body{
 }
 
 .side-bar-logo-styles{
-    @apply ml-2 place-content-center h-14 w-14 rounded-full shadow-lg transition ease-in-out duration-300 center text-2xl text-cyan-100  bg-yellow-400 
+    @apply ml-5 place-content-center h-10 w-10 rounded-full shadow-lg transition ease-in-out duration-300 center text-2xl text-cyan-100  bg-yellow-400 
 }
 
 .side-bar-logo-title{
-    @apply overflow-hidden flex-grow  transform translate-x-3 text-lg text-white
+    @apply overflow-hidden flex-grow  transform translate-x-3 text-base whitespace-nowrap 
 }
 
 .center-self{
     @apply left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
 }
-/* table,td,tr{
+
+.side-bar-menu-styles{
+    @apply flex items-center relative w-full   hover:cursor-pointer transition duration-300 ease-in-out h-14;
+}
+.active{
+    @apply rounded-l-xl bg-white font-bold;
+  }
+.error{
+    @apply text-red-500
+}
+
+.tool-menu-styles{
+
+    @apply mr-2 hover:bg-cyan-800 transition duration-300  p-2 rounded-full hover:cursor-pointer
+}
+.tool-menu-styles:hover > #icon{
+    @apply text-white;
+}
+
+.detail-nav-style{
+    @apply hover:cursor-pointer active:bg-gray-200 border-x border-t  -mr-3  h-full w-28 relative  rounded-t-lg  center font-semibold text-cyan-800;
+}
+
+.active::before, .nav-outline::before{
+    content: '';
+    position: absolute;
+    top: -30px;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    box-shadow: 15px 15px 0 white;
+  
+  }
+  .active::after{
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    box-shadow: 15px -15px 0 white;
+  }
+
+
+/* .nav-outline{
+    @apply bg-white relative
+}
+
+.nav-outline::before{
+    content: '';
+    position: absolute;
+    border-bottom:1px solid rgb(209 213 219);
+    left: -14.9px;
+
+    top:20px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    /* background-color: red; */
+    /* box-shadow: 10px 10px 0 white;
+} */ 
+
+
+/* #table-header > span{
+    @apply border border-black flex-1
+} */
+/* th, td,tr{
     @apply border border-black text-center
 } */
+tbody tr td{
+    @apply text-center
+}
+tbody tr td:nth-child(2){
+    @apply text-left pl-3
+}
+thead tr th {
+    @apply  top-0 bg-cyan-800 py-3 text-gray-200 
+  }

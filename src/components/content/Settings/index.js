@@ -1,9 +1,9 @@
 import React from 'react';
 
-function Dashboard() {
+function Settings() {
     return <div className='h-full center'>
-        this is dashboard page
+        this the settings page
     </div>;
 }
 
-export default Dashboard;
+export default Settings;

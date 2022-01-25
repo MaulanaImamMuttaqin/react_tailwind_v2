@@ -1,66 +1,79 @@
-import { UploadIcon, UserAddIcon } from '@heroicons/react/solid';
-import React, { useContext, useReducer } from 'react';
-import { GlobalContext } from '../../../../context/Provider';
+import { UploadIcon, UserAddIcon, RefreshIcon, DownloadIcon } from '@heroicons/react/solid';
+import React from 'react';
+import { useContext } from 'react/cjs/react.development';
+import { ListContext } from '..';
 import ModalAdd from './ModalAdd';
+import ModalUpload from './ModalUpload';
+import ModalDetail from './ModalDetail';
+// import { GlobalContext } from '../../../../context/Provider';
+
+// import ModalAdd from './ModalAdd';
 
 function RenderList() {
-    const [listState, listDispatch] = useReducer(list, listStates)
+    const { listState, listDispatch } = useContext(ListContext)
 
-    const openAdd = () => {
-        listDispatch({ type: "OPEN_ADD" })
+
+    const ModalDetailController = (state) => {
+        listDispatch({ type: state + "_DETAIL" })
     }
-    const openUpload = () => {
-        listDispatch({ type: "OPEN_UP" })
+
+
+    const isOdd = (num) => {
+        return num % 2 != 0
     }
-    console.log(lists)
+
+    const RowOnClick = (data) => {
+        ModalDetailController("OPEN")
+        listDispatch({ type: "DETAIL", payload: data })
+    }
     return (
 
 
+        <div className=" h-5/6  pt-2 px-12">
 
-        //         { modalAddIsOpen && <ModalAdd />}
-        // { modalUploadIsOpen && <ModalUpload /> }
-        <div className=" h-5/6  border-t border-gray-400 pt-5 px-12">
-            <div className=" flex justify-end text-xl text-cyan-800 mb-1">
-                <span id className="mr-2 hover:bg-cyan-500 p-2 rounded-full hover:cursor-pointer " onClick={() => openAdd()} ><UserAddIcon className='h-5 w-5 text-cyan-800 ' /></span>
-                <span className="mr-5 hover:bg-cyan-500 p-2 rounded-full hover:cursor-pointer" onClick={() => openUpload()}><UploadIcon className='h-5 w-5 text-cyan-800 ' /></span>
-            </div>
-            <div className="">
-                <table className="w-full">
-                    <thead className="border-b border-black h-10">
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>NPM</th>
-                            <th>Jurusan </th>
-                            <th>Tanggal Mulai </th>
-                            <th>Tanggal Berakhir</th>
-                            <th>Instansi</th>
-                            <th>Status</th>
+            {listState.loading ? <div className='center'>
 
-                        </tr>
-                    </thead>
+                <p>loading</p>
+            </div> :
+                <div className="h-[500px] overflow-auto">
+                    <table className="w-full">
+                        <thead className="">
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>NPM</th>
+                                <th>Jurusan </th>
+                                <th>Tanggal Mulai </th>
+                                <th>Tanggal Berakhir</th>
+                                <th>Instansi</th>
+                                <th>Status</th>
 
-                    <tbody>
-                        {
-                            lists.map((l, i) => {
-                                return (
-                                    <tr key={i} className="border-b border-gray-400 h-10 ">
-                                        <td>{i}</td>
-                                        <td>{l.nama}</td>
-                                        <td>{l.npm}</td>
-                                        <td>{l.jurusan}</td>
-                                        <td>{l.tgl_mulai} </td>
-                                        <td>{l.tgl_selesai}</td>
-                                        <td>{l.instansi}</td>
-                                        <td>{l.status}</td>
-                                    </tr>
-                                )
-                            })
-                        }
+                            </tr>
+                        </thead>
 
-                    </tbody>
-                </table>
-            </div>
+                        <tbody className=''>
+                            {
+                                listState.lists.map((l, i) => {
+                                    return (
+                                        <tr onClick={() => RowOnClick(l)} key={i} className={`h-10 ${isOdd(i) && 'bg-gray-300'} text-gray-700 transition-all ease-in-out duration-200 hover:h-14 hover:text-gray-200 hover:cursor-pointer hover:bg-gray-400`}>
+                                            <td>{i + 1}</td>
+                                            <td>{l.nama}</td>
+                                            <td>{l.npm}</td>
+                                            <td>{l.jurusan}</td>
+                                            <td>{l.mulai} </td>
+                                            <td>{l.akhir}</td>
+                                            <td>{l.instansi}</td>
+                                            <td>{l.status ? "ACTIVE" : "NOT ACTIVE"}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+
+            }
         </div >
     )
 }
