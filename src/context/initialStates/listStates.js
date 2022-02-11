@@ -3,7 +3,9 @@ let listStates = {
     modalUploadIsOpen: false,
     modalDetailIsOpen: false,
     lists: [],
-    listDetail: {},
+    listDetail: {
+
+    },
     loading: false,
     refetch: false,
     updated: false,

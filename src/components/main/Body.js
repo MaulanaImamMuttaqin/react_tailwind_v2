@@ -17,10 +17,10 @@ function Body() {
     return <div className={`h-full ${!sideBarIsOpen ? 'w-[95%]' : 'w-[84%]'}   transition-all duration-300 ease-in-out  p-2 pl-0`}>
         <div className='h-full w-full bg-white rounded-xl'>
             <Routes location={location} key={location.pathname}>
-                <Route path='/Lists' element={<List />} />
-                <Route path='/Settings' element={<Settings />} />
-                <Route path='/Users' element={<Users />} />
-                <Route path='/' element={<Dashboard />} />
+                <Route path='Lists' element={<List />} />
+                <Route path='Settings' element={<Settings />} />
+                <Route path='Users' element={<Users />} />
+                <Route path='' element={<Dashboard />} />
             </Routes>
         </div>
     </div>;

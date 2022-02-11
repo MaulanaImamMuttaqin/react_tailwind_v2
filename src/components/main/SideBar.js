@@ -8,15 +8,23 @@ function SideBar() {
         mainState: {
             sideBarIsOpen
         },
-        mainDispatch
+        mainDispatch,
+        authDispatch
     } = useContext(GlobalContext)
     const navigate = useNavigate()
     const { pathname } = useLocation()
-    const location = pathname.split("/")[1]
+    const location = pathname.split("/")[2]
     const NavigateTo = (params) => {
         navigate(params)
     }
 
+    const logout = () => {
+        let signout = window.confirm("Anda yakin ingin keluar?")
+        if (signout) {
+            localStorage.removeItem("token")
+            authDispatch({ type: "LOGOUT" })
+        }
+    }
 
     const toggle = () => {
         mainDispatch({ type: "TOGGLE" })
@@ -27,14 +35,14 @@ function SideBar() {
             <ItemMenu
                 name="Home"
                 highLight={!location}
-                Navigate={() => NavigateTo('/')}
+                Navigate={() => NavigateTo('/Admin')}
             >
                 <HomeIcon className='text-white h-5 w-5 ' />
             </ItemMenu>
 
             <ItemMenu
                 name="Daftar Mahasiswa"
-                Navigate={() => NavigateTo('/Lists')}
+                Navigate={() => NavigateTo('/Admin/Lists')}
                 highLight={location === 'Lists'}
             >
                 <ViewListIcon className='text-white h-5 w-5 ' />
@@ -42,7 +50,7 @@ function SideBar() {
 
             <ItemMenu
                 name="Akun"
-                Navigate={() => NavigateTo('/Users')}
+                Navigate={() => NavigateTo('/Admin/Users')}
                 highLight={location === 'Users'}
             >
                 <UserIcon className='text-white h-5 w-5 ' />
@@ -50,7 +58,7 @@ function SideBar() {
 
             <ItemMenu
                 name="Pengaturan"
-                Navigate={() => NavigateTo('/Settings')}
+                Navigate={() => NavigateTo('/Admin/Settings')}
                 highLight={location === 'Settings'}
             >
                 <CogIcon className='text-white h-5 w-5 ' />
@@ -58,7 +66,7 @@ function SideBar() {
 
             <ItemMenu
                 name="Log Out"
-                Navigate={() => NavigateTo('/')}
+                Navigate={() => logout()}
                 highLight={false}
             >
                 <LogoutIcon className='text-white h-5 w-5 ' />

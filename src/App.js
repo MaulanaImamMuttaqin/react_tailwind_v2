@@ -1,16 +1,20 @@
 import React from 'react'
-import Body from './components/main/Body'
-import SideBar from './components/main/SideBar'
-import ContextProvider from './context/Provider'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import Components from './components'
+import Login from './components/main/Login'
+import ContextProvider, { GlobalContext } from './context/Provider'
 // import TypingField from './pages/ContentLogic/TypingField'
 
 function App() {
+  const location = useLocation()
+
+
   return (
     <ContextProvider>
-      <div className='h-screen w-screen bg-gradient-to-tr from-cyan-900 to-cyan-700 flex'>
-        <SideBar />
-        <Body />
-      </div>
+      <Routes location={location} key={location.pathname}>
+        <Route path='Admin/Auth/login' element={<Login />} />
+        <Route path='Admin/*' element={<Components />} />
+      </Routes>
     </ContextProvider>
   )
 }

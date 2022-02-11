@@ -1,10 +1,6 @@
-import { UploadIcon, UserAddIcon, RefreshIcon, DownloadIcon } from '@heroicons/react/solid';
-import React from 'react';
-import { useContext } from 'react/cjs/react.development';
+
+import React, { useContext } from 'react';
 import { ListContext } from '..';
-import ModalAdd from './ModalAdd';
-import ModalUpload from './ModalUpload';
-import ModalDetail from './ModalDetail';
 // import { GlobalContext } from '../../../../context/Provider';
 
 // import ModalAdd from './ModalAdd';
@@ -19,7 +15,7 @@ function RenderList() {
 
 
     const isOdd = (num) => {
-        return num % 2 != 0
+        return num % 2 !== 0
     }
 
     const RowOnClick = (data) => {
@@ -63,7 +59,11 @@ function RenderList() {
                                             <td>{l.mulai} </td>
                                             <td>{l.akhir}</td>
                                             <td>{l.instansi}</td>
-                                            <td>{l.status ? "ACTIVE" : "NOT ACTIVE"}</td>
+                                            <td>
+                                                <span className={`rounded-full text-white text-xs p-2 font-semibold ${l.status ? 'bg-green-500' : "bg-red-500"}`}>
+                                                    {l.status ? "ACTIVE" : "NOT ACTIVE"}
+                                                </span>
+                                            </td>
                                         </tr>
                                     )
                                 })

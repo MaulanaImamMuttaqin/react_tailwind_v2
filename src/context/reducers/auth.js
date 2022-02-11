@@ -3,17 +3,20 @@ const auth = (state, { type, payload }) => {
         case "LOGIN":
             return {
                 ...state,
-                isLoggedIn: true
+                isLoggedIn: true,
             }
         case "LOGOUT":
             return {
                 ...state,
-                isLoggedIn: false
+                isLoggedIn: false,
+                token: {}
             }
         case "SET_USER":
             return {
                 ...state,
-                userData: payload
+                userData: payload.userData,
+                token: payload.token,
+                isLoggedIn: true
             }
         default:
             return state;

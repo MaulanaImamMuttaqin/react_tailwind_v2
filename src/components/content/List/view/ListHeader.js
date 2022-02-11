@@ -1,6 +1,5 @@
 import { DownloadIcon, RefreshIcon, UploadIcon, UserAddIcon } from '@heroicons/react/solid';
-import React from 'react';
-import { useContext } from 'react/cjs/react.development';
+import React, { useContext } from 'react';
 import { ListContext } from '..';
 import ModalAdd from './ModalAdd';
 import ModalDetail from './ModalDetail';

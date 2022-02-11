@@ -1,29 +1,27 @@
 
 import { XIcon } from '@heroicons/react/solid';
-import React from 'react';
+import React, { useContext } from 'react';
 
 
 import * as Yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { useForm } from "react-hook-form"
-import { useContext } from 'react/cjs/react.development';
+import { useForm } from "react-hook-form";
 import { ListContext } from '..';
+import { formTemplate } from '../../../../constant/formTemplate';
 
 const schema = Yup.object().shape({
-    nama: Yup.string().required(),
-    npm: Yup.string().required(),
-    jurusan: Yup.string().required(),
-    instansi: Yup.string().required(),
-    mulai: Yup.string().required(),
-    akhir: Yup.string().required()
+    nama: Yup.string().required("Nama tidak boleh kosong"),
+    npm: Yup.string().required("NPM tidak boleh kosong"),
+    jurusan: Yup.string().required("Jurusan tidak boleh kosong"),
+    instansi: Yup.string().required("Intansi tidak boleh kosong"),
+    mulai: Yup.string().required("Tanggal Mulai tidak boleh kosong"),
+    akhir: Yup.string().required("Tanggal Berakhir tidak boleh kosong")
 })
 
 function ModalAdd({ closeModal }) {
     const { onModalAddSubmit } = useContext(ListContext)
 
-    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm({ resolver: yupResolver(schema), });
-
-
+    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema), });
 
 
     return (
@@ -38,12 +36,12 @@ function ModalAdd({ closeModal }) {
 
                 <form onSubmit={handleSubmit(onModalAddSubmit)}>
                     <div className='border border-gray-300 rounded-3xl p-5'>
-                        <Input erroMsg="Nama Tidak boleh Kosong" errors={errors.nama} register={register} name="nama" type="text" placeholder="Masukkan Nama" title="Nama" />
-                        <Input erroMsg="NPM Tidak boleh Kosong" errors={errors.npm} register={register} name="npm" type="text" placeholder="Masukkan No Induk Mahasiswa" title="NPM" />
-                        <Input erroMsg="Jurusan Tidak boleh Kosong" errors={errors.jurusan} register={register} name="jurusan" type="text" placeholder="Jurusan" title="Jurusan" />
-                        <Input erroMsg="Instansi Tidak boleh Kosong" errors={errors.instansi} register={register} name="instansi" type="text" placeholder="Masukkan Asal Intansi" title="Instansi" />
-                        <Input erroMsg="Tanggal Mulai Tidak boleh Kosong" errors={errors.mulai} register={register} name="mulai" type="date" placeholder="Masukkan Tanggal Mulai Kerja Praktek" title="Tanggal Mulai" />
-                        <Input erroMsg="Tanggal Akhir Tidak boleh Kosong" errors={errors.akhir} register={register} name="akhir" register={register} name="akhir" type="date" placeholder="Masukkan Tanggal Berakhir Kerja Praktek" title="Tanggal Berakhir" />
+                        {formTemplate.map((f, i) => {
+                            return (
+                                <Input key={i} erros={errors[f.name]} register={register} {...f} />
+                            )
+                        })}
+
                     </div>
 
                     <div className='p-5 flex justify-around'>

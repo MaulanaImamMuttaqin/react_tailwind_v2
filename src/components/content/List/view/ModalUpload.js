@@ -2,10 +2,8 @@
 import { XIcon, UploadIcon } from '@heroicons/react/solid';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup'
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { upload } from '@testing-library/user-event/dist/upload';
-import { useContext } from 'react/cjs/react.development';
 import { ListContext } from '..';
 
 
@@ -25,7 +23,7 @@ const schema = yup.object().shape({
 function ModalUpload({ closeModal }) {
     const { onModalUploadSubmit } = useContext(ListContext)
     const [uploaded, setUploaded] = useState([false, ""])
-    const { register, handleSubmit, formState: { errors }, reset } = useForm({ resolver: yupResolver(schema) })
+    const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema) })
 
 
     const onChangeFile = (e) => {
