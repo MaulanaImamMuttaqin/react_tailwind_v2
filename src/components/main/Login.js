@@ -24,13 +24,21 @@ function Login() {
 
     const login = (data) => {
         setLoading(true)
+        console.log("fetching")
         axios.post(`${BASE_URL}/auth/token/obtain/`, data)
             .then(res => {
+
                 let userData = parseJwt(res.data.refresh)
+                console.log(res.data)
+                console.log(userData)
                 if (userData.role_id === 1) {
+                    console.log(res.data)
                     setLoading(false)
                     localStorage.setItem("token", JSON.stringify(res.data))
                     authDispatch({ type: "LOGIN" })
+                } else {
+                    setInvalid(true)
+                    setLoading(false)
                 }
             })
             .catch(err => {
@@ -54,14 +62,14 @@ function Login() {
                                 className="text-yellow-500">D</span>istribusi)</h1>
                         <h1 className="text-2xl text-gray-200 font-bold">Aceh</h1>
                     </div>
-                    <div className=" col-span-2 center ">
-                        <div>
-                            <h1></h1>
+                    <div className=" col-span-2 center border flex flex-col gap-5 ">
+                        <div className='text-3xl font-semibold text-cyan-800 text-center'>
+                            <h1>LOGIN</h1>
                         </div>
-                        <form onSubmit={handleSubmit(login)} className=" center">
+                        <form onSubmit={handleSubmit(login)} className=" center ">
                             <input type="text"
                                 {...register("username")}
-                                className="pl-5 mb-3 h-[50px] w-[300px] rounded-full border border-gray-400 outline-cyan-700"
+                                className="pl-5 mb-3 h-[50px] w-[300px] rounded-full border border-gray-400 outline-cyan-700 "
                                 placeholder="Username" />
                             <input type="password"
                                 {...register("password")}
@@ -71,7 +79,10 @@ function Login() {
                                 type='submit'
                                 className="bg-cyan-800 mb-3 h-[50px] w-[300px] rounded-full  font-bold text-white hover:bg-cyan-700 active:bg-cyan-900">LOGIN</button>
                             <p className="text-center">{isLoading && "Loading"}</p>
-                            <p className='text-center'> {invalid && <small className='text-red-500'>Username atau Password Salah</small>}</p>
+                            {invalid && !isLoading && <div id="error" className='flex flex-col items-center'>
+                                <small className='text-red-500'>Username atau Password salah </small>
+                                <small className='text-red-500'>atau tidak terdaftar sebagai admin</small>
+                            </div>}
                             <p className="text-center">Masuk sebagai <span className="text-blue-800 font-bold">Admin</span></p>
                         </form>
                     </div>
